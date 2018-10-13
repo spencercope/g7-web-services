@@ -21,7 +21,7 @@ export class UserService extends SharedService<User> {
   }
 
   async register(vm: RegisterModel): Promise<boolean> {
-    const { email, isHelper } = vm;
+    const { email, isHelper, password } = vm;
     let user;
 
     try {
@@ -37,7 +37,9 @@ export class UserService extends SharedService<User> {
     const newUser = new this._model();
     newUser.email = email;
     newUser.isHelper = isHelper;
-
+    const salt = await genSalt(10);
+    newUser.password = await hash(password, salt);
+    
     await this.create(newUser);
     await this.sendVerificationEmail(newUser);
 
@@ -134,15 +136,13 @@ export class UserService extends SharedService<User> {
       throw new InternalServerErrorException(e);
     }
 
-    const { password, firstName, lastName, nickname, organization, phone } = vm;
+    const {  firstName, lastName, nickname, organization, phone } = vm;
     user.firstName = firstName;
     user.lastName = lastName;
     user.nickname = nickname;
     user.organization = organization;
     user.phone = phone;
 
-    const salt = await genSalt(10);
-    user.password = await hash(password, salt);
 
     try {
       return this.update(userId, user);

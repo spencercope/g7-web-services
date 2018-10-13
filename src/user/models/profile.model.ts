@@ -7,5 +7,4 @@ export class ProfileModel {
   firstName: string;
   lastName: string;
   phone: string;
-  password: string;
 }

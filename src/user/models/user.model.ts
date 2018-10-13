@@ -2,8 +2,8 @@ import { ModelType, prop } from 'typegoose';
 import { SharedModel } from '../../shared/shared.model';
 
 export class User extends SharedModel<User> {
-  @prop({ required: false })
-  password?: string;
+  @prop({ required: true })
+  password: string;
   @prop({ required: true })
   email: string;
 
