@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { UserService } from '../../user/user.service';
@@ -20,5 +20,13 @@ export class AuthService {
 
   async decodeToken(token): Promise<any> {
     return this._jwtService.decode(token, { json: true });
+  }
+
+  async verifyToken(token): Promise<any> {
+    try {
+      return this._jwtService.verify(token, {});
+    } catch (e) {
+      throw new InternalServerErrorException(e);
+    }
   }
 }

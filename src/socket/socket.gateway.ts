@@ -1,9 +1,21 @@
-import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, WsResponse } from '@nestjs/websockets';
+import {
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+  WsException,
+  WsResponse,
+} from '@nestjs/websockets';
 import { Observable, of } from 'rxjs';
 import { Client, Server, Socket } from 'socket.io';
+import { AuthService } from '../shared/auth/auth.service';
 
 @WebSocketGateway()
 export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
+
+  constructor(private _authService: AuthService) {
+  }
 
   @WebSocketServer() server: Server;
 
@@ -12,8 +24,24 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     return of({ event: 'test', data: {} });
   }
 
-  handleConnection(client: Socket) {
-    console.log(client.handshake.query);
+  async handleConnection(client: Socket) {
+    const { token } = client.handshake.query;
+
+    if (!token) {
+      client.disconnect(true);
+      return;
+    }
+
+    try {
+      await this._authService.verifyToken(token);
+    } catch (e) {
+      client.emit('exception', {
+        status: false,
+        message: 'Invalid token',
+      });
+      client.disconnect(true);
+    }
+
     const length = Object.keys(this.server.sockets.sockets).length;
     this.server.emit('connected-count', { length });
   }

@@ -1,3 +1,6 @@
+/**
+ * PUT /users/update-profile
+ */
 export class ProfileModel {
   organization?: string;
   nickname?: string;

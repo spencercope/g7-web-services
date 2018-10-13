@@ -12,7 +12,7 @@ import { SharedModule } from './shared/shared.module';
     SocketModule,
     UserModule,
     SharedModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/test', {
+    MongooseModule.forRoot('mongodb+srv://admin:admin123@cluster0-kgbt4.mongodb.net/test?retryWrites=true', {
       retryAttempts: 3,
       retryDelay: 3000,
       useNewUrlParser: true,
