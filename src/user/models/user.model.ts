@@ -1,5 +1,6 @@
-import { ModelType, prop } from 'typegoose';
+import { ModelType, prop, Ref, arrayProp } from 'typegoose';
 import { SharedModel } from '../../shared/shared.model';
+import { HelpRequest } from 'request/models/request.model';
 
 export class User extends SharedModel<User> {
   @prop({ required: true })
@@ -15,7 +16,8 @@ export class User extends SharedModel<User> {
   isHelper: boolean;
   @prop({ required: true, default: false })
   isVerified: boolean;
-
+  @arrayProp({default:[], itemsRef:HelpRequest})
+  requests: Ref<HelpRequest>[];
   @prop({ required: false })
   organization?: string;
   @prop({ required: false })

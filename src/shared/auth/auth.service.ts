@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   async validateUser(payload): Promise<any> {
-    return this._userService.findOne({ username: payload.username });
+    return this._userService.findOne({ email: payload.email  });
   }
 
   async decodeToken(token): Promise<any> {
