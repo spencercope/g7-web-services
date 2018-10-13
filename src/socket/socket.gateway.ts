@@ -42,12 +42,15 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
       client.disconnect(true);
     }
 
-    const length = Object.keys(this.server.sockets.sockets).length;
-    this.server.emit('connected-count', { length });
+    this.emitConnectedClients();
   }
 
   handleDisconnect(client: Client) {
     console.log('disconnect', client.id);
+    this.emitConnectedClients();
+  }
+
+  private emitConnectedClients() {
     const length = Object.keys(this.server.sockets.sockets).length;
     this.server.emit('connected-count', { length });
   }
