@@ -1,8 +1,7 @@
-import { Controller, Post, Req, Body, UnauthorizedException, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Req, Body, UnauthorizedException, UseGuards, Get, Query } from '@nestjs/common';
 import { HelpRequest } from './models/request.model';
 import { RequestService } from './request.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Query } from 'mongoose';
 
 @Controller('requests')
 export class RequestController {
@@ -28,9 +27,20 @@ export class RequestController {
   @UseGuards(AuthGuard())
   async getRequestByReciver(@Req() req) {
     const requestId = req.user.id;
-    console.log(req.user)
+    console.log(req.user);
     return this._requestService.getRequestByReceiver(requestId);
-  } 
+  }
+
+  // @Get('helpers')
+  // @UseGuards(AuthGuard())
+  // async getHelpers(@Req() req ) {
+  //   const seekerLat = req.user.lat;
+  //   const seekerLong = req.user.long;
+  //   const helpersCat = req.helper.cat;
+  //   const seekerCat = req.user.cat;
+  //   console.log(req.user)
+  //   return this._requestService.getCurrentOnlineLocations(seekerLat,seekerLong,helpersCat, seekerCat);
+  // }
 
   @Get()
   @UseGuards(AuthGuard())
@@ -39,7 +49,10 @@ export class RequestController {
   }
 
   @Get('current')
-  async getCurrent() {
-    return this._requestService.getCurrentOnlineLocations(38.6325937, -90.2278455);
+  async getCurrent(@Query('lat') lat: number, @Query('long') long: number) {
+    console.log('LAT', lat);
+    console.log('LAT', long);
+
+    return this._requestService.getCurrentOnlineLocations(lat, long);
   }
 }

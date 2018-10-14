@@ -1,16 +1,11 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { AxiosRequestConfig } from '@nestjs/common/http/interfaces/axios.interfaces';
-import * as google from 'googleapis';
 import { NotificationOptions } from './fcm.model';
-import * as key from './gh7-server.json';
-import { Observable } from 'rxjs';
-import { filter, startWith, switchMap, tap } from 'rxjs/operators';
 
 @Injectable()
 export class FcmService {
   private readonly _config: AxiosRequestConfig;
   private readonly _fcmSendUrl: string;
-  private _fcmAccessToken: string;
 
   constructor(private _http: HttpService) {
     this._fcmSendUrl = 'https://fcm.googleapis.com/fcm/send';
@@ -18,7 +13,7 @@ export class FcmService {
       headers: {
         'Content-type': 'application/json',
         'Authorization': 'key=AAAAuiVZnpw:APA91bGv_FfA6bqbBu-OASjeCvsSe4FaOIRcaT0eB1AkIbKVil9SPkw_5c612RCJHpjT-' +
-        'iWcDmzwneAPUJK1qZelobXCukjNymswXmnp5R2X9p21NYMAVHMqazzGUmhWgLHkhXAzqKb2',
+          'iWcDmzwneAPUJK1qZelobXCukjNymswXmnp5R2X9p21NYMAVHMqazzGUmhWgLHkhXAzqKb2',
       },
     };
   }
@@ -44,7 +39,9 @@ export class FcmService {
     };
 
     return new Promise<any>((resolve, reject) => {
-      this._http.post(' https://fcm.googleapis.com/fcm/send', data, this._config);
+      this._http.post(' https://fcm.googleapis.com/fcm/send', data, this._config).subscribe(data => {
+        console.log(data);
+      });
     });
 
     // return this.getFcmAccessToken()

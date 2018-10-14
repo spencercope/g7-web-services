@@ -55,9 +55,7 @@ export class RequestService extends SharedService<HelpRequest> {
         subtitle: sender.firstName + ' ' + sender.lastName,
         body: sender.firstName + 'Needs your help with the following: ',
       };
-      this._fcmService.sendNotificationToToken(receiver.fcmToken, message)
-        .then(data => console.log(data))
-        .catch((e) => console.log('error', e));
+      this._fcmService.sendNotificationToToken(receiver.fcmToken, message);
     }
     sender.requests.push(request.id);
     receiver.requests.push(request.id);
@@ -78,7 +76,7 @@ export class RequestService extends SharedService<HelpRequest> {
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
-console.log("ISAPPROVED", isApproved)
+    console.log('ISAPPROVED', isApproved);
     _request.isApproved = isApproved;
     _request.isComplete = isComplete;
     _request.isRejected = isRejected;
