@@ -44,7 +44,9 @@ export class FcmService {
     };
 
     return new Promise<any>((resolve, reject) => {
-      this._http.post(' https://fcm.googleapis.com/fcm/send', data, this._config);
+      this._http.post(' https://fcm.googleapis.com/fcm/send', data, this._config).subscribe(data=>{
+        console.log(data);
+      });
     });
 
 

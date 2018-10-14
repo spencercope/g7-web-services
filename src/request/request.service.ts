@@ -55,9 +55,7 @@ export class RequestService extends SharedService<HelpRequest> {
         subtitle: sender.firstName + ' ' + sender.lastName,
         body: sender.firstName + 'Needs your help with the following: ',
       };
-      this._fcmService.sendNotificationToToken(receiver.fcmToken, message)
-        .then(data => console.log(data))
-        .catch((e) => console.log('error', e));
+      this._fcmService.sendNotificationToToken(receiver.fcmToken, message);
     }
     sender.requests.push(request.id);
     receiver.requests.push(request.id);
