@@ -64,6 +64,11 @@ export class UserService extends SharedService<User> {
 
   async verifyEmail(token: string): Promise<boolean> {
     const decoded = await this._authService.decodeToken(token);
+
+    if (!decoded) {
+      throw new BadRequestException('Invalid token');
+    }
+
     let user: InstanceType<User>;
     try {
       user = await this.findOne({ email: decoded.email });
@@ -140,7 +145,7 @@ export class UserService extends SharedService<User> {
       throw new InternalServerErrorException(e);
     }
 
-    const {  firstName, lastName, nickname, organization, phone } = vm;
+    const { firstName, lastName, nickname, organization, phone } = vm;
     user.firstName = firstName;
     user.lastName = lastName;
     user.nickname = nickname;
