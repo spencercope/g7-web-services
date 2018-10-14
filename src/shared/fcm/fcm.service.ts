@@ -47,7 +47,6 @@ export class FcmService {
       this._http.post(' https://fcm.googleapis.com/fcm/send', data, this._config);
     });
 
-
     // return this.getFcmAccessToken()
     //   .pipe(
     //     startWith(this._fcmAccessToken || null),

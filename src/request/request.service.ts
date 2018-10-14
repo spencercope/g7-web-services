@@ -97,7 +97,7 @@ console.log("ISAPPROVED", isApproved)
     Object.keys(clientsLocations).forEach(key => {
       const { lat, lng } = clientsLocations[key];
       const distance = getDistanceFromLatLonInMi(seekerLat, seekerLng, lat, lng);
-      if (distance <= 10) {
+      if (distance <= 1000) {
         users.push(key.toString());
         locations[key] = { lat, lng, distance };
       }
