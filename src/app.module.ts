@@ -7,7 +7,6 @@ import { UserModule } from './user/user.module';
 import { SharedModule } from './shared/shared.module';
 import { RequestModule } from './request/request.module';
 
-
 @Module({
   imports: [
     SocketModule,
@@ -17,7 +16,7 @@ import { RequestModule } from './request/request.module';
       retryAttempts: 3,
       retryDelay: 3000,
       useNewUrlParser: true,
-      useFindAndModify: false
+      useFindAndModify: false,
     }),
     RequestModule,
   ],

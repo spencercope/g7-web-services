@@ -1,4 +1,4 @@
-import { Controller, Post, Req, Body, UnauthorizedException, UseGuards, Get,Query } from '@nestjs/common';
+import { Controller, Post, Req, Body, UnauthorizedException, UseGuards, Get, Query } from '@nestjs/common';
 import { HelpRequest } from './models/request.model';
 import { RequestService } from './request.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -27,9 +27,9 @@ export class RequestController {
   @UseGuards(AuthGuard())
   async getRequestByReciver(@Req() req) {
     const requestId = req.user.id;
-    console.log(req.user)
+    console.log(req.user);
     return this._requestService.getRequestByReceiver(requestId);
-  } 
+  }
 
   // @Get('helpers')
   // @UseGuards(AuthGuard())
@@ -40,7 +40,7 @@ export class RequestController {
   //   const seekerCat = req.user.cat;
   //   console.log(req.user)
   //   return this._requestService.getCurrentOnlineLocations(seekerLat,seekerLong,helpersCat, seekerCat);
-  // } 
+  // }
 
   @Get()
   @UseGuards(AuthGuard())
@@ -50,8 +50,8 @@ export class RequestController {
 
   @Get('current')
   async getCurrent(@Query('lat') lat: number, @Query('long') long: number) {
-    console.log("LAT", lat);
-    console.log("LAT", long);
+    console.log('LAT', lat);
+    console.log('LAT', long);
 
     return this._requestService.getCurrentOnlineLocations(lat, long);
   }

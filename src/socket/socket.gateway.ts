@@ -23,27 +23,22 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   clientsLocations = {};
   private clients = {};
 
-  @SubscribeMessage('message')
-  onEvent(client: any, payload: any): Observable<WsResponse<any>> {
-    return of({ event: 'test', data: {} });
-  }
-
   async handleConnection(client: Socket) {
     const { token } = client.handshake.query;
 
-    // if (!token) {
-    //   client.disconnect(true);
-    //   return;
-    // }
-    //
-    // const decoded = await this.getDecodedToken(client, token);
-    // const user = await this.getUser(client, decoded.email);
-    //
-    // if (this.clients[user.id]) {
-    //   client.disconnect(true);
-    // }
+    if (!token) {
+      client.disconnect(true);
+      return;
+    }
 
-    this.clients['5bc2a4bdb9d010071aa15d9b'] = client.id;
+    const decoded = await this.getDecodedToken(client, token);
+    const user = await this.getUser(client, decoded.email);
+
+    if (this.clients[user.id]) {
+      client.disconnect(true);
+    }
+
+    this.clients[user.id] = client.id;
     this.emitConnectedClients();
   }
 
@@ -55,21 +50,21 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('send-location')
   async onLocationReceived(client: Socket, data: any) {
     const { lat, lng, authToken } = data;
-    // let decoded;
-    // try {
-    //   decoded = await this._authService.verifyToken(authToken);
-    // } catch (e) {
-    //   this.emitExceptionEvent(client, 'Invalid token');
-    // }
-    //
-    // let user;
-    // try {
-    //   user = await this._userService.findOne({ email: decoded.email });
-    // } catch (e) {
-    //   this.emitExceptionEvent(client, 'Invalid');
-    // }
+    let decoded;
+    try {
+      decoded = await this._authService.verifyToken(authToken);
+    } catch (e) {
+      this.emitExceptionEvent(client, 'Invalid token');
+    }
 
-    this.clientsLocations['5bc2a4bdb9d010071aa15d9b'] = this.clientsLocations['5bc2a4bdb9d010071aa15d9b'] || { lat, lng };
+    let user;
+    try {
+      user = await this._userService.findOne({ email: decoded.email });
+    } catch (e) {
+      this.emitExceptionEvent(client, 'Invalid');
+    }
+
+    this.clientsLocations[user.id] = this.clientsLocations[user.id] || { lat, lng };
 
     console.log('clientLocation', this.clientsLocations);
   }

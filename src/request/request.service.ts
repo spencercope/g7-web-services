@@ -76,7 +76,7 @@ export class RequestService extends SharedService<HelpRequest> {
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
-console.log("ISAPPROVED", isApproved)
+    console.log('ISAPPROVED', isApproved);
     _request.isApproved = isApproved;
     _request.isComplete = isComplete;
     _request.isRejected = isRejected;
