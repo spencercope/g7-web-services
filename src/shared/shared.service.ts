@@ -20,6 +20,10 @@ export abstract class SharedService<T extends Typegoose> {
     return this._model.findById(this.toObjectId(id)).exec();
   }
 
+  async findByIds(ids: string[]): Promise<T[]> {
+    return this._model.find({ _id: { $in: ids } }).exec();
+  }
+
   async create(item: InstanceType<T>): Promise<InstanceType<T>> {
     return this._model.create(item);
   }
@@ -29,7 +33,7 @@ export abstract class SharedService<T extends Typegoose> {
   }
 
   async update(id: string, item: InstanceType<T>): Promise<InstanceType<T>> {
-    return this._model.findOneAndUpdate({_id: this.toObjectId(id)}, item, { new: true }).exec();
+    return this._model.findOneAndUpdate({ _id: this.toObjectId(id) }, item, { new: true }).exec();
   }
 
   async clearCollection(filter = {}): Promise<void> {

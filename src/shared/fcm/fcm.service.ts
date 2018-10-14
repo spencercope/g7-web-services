@@ -41,8 +41,6 @@ export class FcmService {
         filter(data => !!data),
         tap(token => this._fcmAccessToken = token),
         switchMap(_ => {
-          console.log({ token: this._fcmAccessToken });
-
           this._config.headers.Authorization = this._config.headers.Authorization.replace('{token}', this._fcmAccessToken);
           const data = {
             message: {

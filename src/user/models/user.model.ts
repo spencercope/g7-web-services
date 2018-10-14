@@ -30,6 +30,8 @@ export class User extends SharedModel<User> {
   phone?: string;
   @prop({ required: false })
   fcmToken?: string;
+  @prop({ required: false })
+  helpCategory?: string;
 
   static get model(): ModelType<User> {
     return new User().getModelForClass(User);

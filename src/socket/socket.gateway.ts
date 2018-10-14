@@ -20,7 +20,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @WebSocketServer() server: Server;
-  private clientsLocations = {};
+  clientsLocations = {};
   private clients = {};
 
   @SubscribeMessage('message')
@@ -43,7 +43,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     //   client.disconnect(true);
     // }
 
-    this.clients[client.id] = client.id;
+    this.clients['5bc2a4bdb9d010071aa15d9b'] = client.id;
     this.emitConnectedClients();
   }
 
@@ -69,7 +69,7 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
     //   this.emitExceptionEvent(client, 'Invalid');
     // }
 
-    this.clientsLocations[client.id] = this.clientsLocations[client.id] || { lat, lng};
+    this.clientsLocations['5bc2a4bdb9d010071aa15d9b'] = this.clientsLocations['5bc2a4bdb9d010071aa15d9b'] || { lat, lng };
 
     console.log('clientLocation', this.clientsLocations);
   }

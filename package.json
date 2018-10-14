@@ -27,6 +27,7 @@
     "@nestjs/passport": "^5.1.0",
     "@nestjs/websockets": "^5.3.11",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.4",
     "email-templates": "^5.0.1",
     "googleapis": "^34.0.0",
     "handlebars": "^4.0.12",

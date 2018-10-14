@@ -1,0 +1,13 @@
+POST http://localhost:3000/requests/create
+Accept: */*
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhlbHBlckBoZWxwZXIuY29tIiwiaWF0IjoxNTM5NDg4ODg3LCJleHAiOjE1Mzk0OTI0ODd9.ejrW7dZkzgchd1pKbvAyUe9vMHtss1Dmt65WddBMPuw
+
+< test_request_create.json
+
+###
+
+GET http://localhost:3000/requests/current
+Accept: */*
+
+###

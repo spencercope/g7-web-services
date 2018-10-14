@@ -48,9 +48,9 @@ export class UserController {
   async updateFcmToken(@Req() req, @Body('token') token: string): Promise<boolean> {
     const currentUser = req.user;
 
-    if (!currentUser.isVerified) {
-      throw new UnauthorizedException('Not verified');
-    }
+    // if (!currentUser.isVerified) {
+    //   throw new UnauthorizedException('Not verified');
+    // }
 
     return this._userService.updateFcmToken(currentUser.id, token);
   }
