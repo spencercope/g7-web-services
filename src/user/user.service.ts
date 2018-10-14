@@ -20,6 +20,10 @@ export class UserService extends SharedService<User> {
     this._model = _userModel;
   }
 
+  async getUsers() {
+    return this._model.find().populate('requests').exec();
+  }
+
   async register(vm: RegisterModel): Promise<boolean> {
     const { email, isHelper, password } = vm;
     let user;

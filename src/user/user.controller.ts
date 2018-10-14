@@ -13,10 +13,10 @@ export class UserController {
   constructor(private readonly _userService: UserService) {
   }
 
-  // @Get()
-  // async get(): Promise<User[]> {
-  //   return this._userService.findAll();
-  // }
+  @Get()
+  async get(): Promise<User[]> {
+    return this._userService.getUsers();
+  }
 
   @Post('register')
   async register(@Body() vm: RegisterModel): Promise<boolean> {
