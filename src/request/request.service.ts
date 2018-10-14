@@ -2,8 +2,8 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { HelpRequest } from './models/request.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModelType } from 'typegoose';
-import { SharedService } from 'shared/shared.service';
-import { UserService } from 'user/user.service';
+import { SharedService } from '../shared/shared.service';
+import { UserService } from '../user/user.service';
 import { FcmService } from '../shared/fcm/fcm.service';
 
 @Injectable()
