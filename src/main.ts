@@ -5,9 +5,9 @@ import * as cors from 'cors';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.use(cors());
-  await app.listen(3000);
+  await app.listen(3007);
 
   if (module.hot) {
     module.hot.accept();
