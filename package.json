@@ -28,6 +28,7 @@
     "@nestjs/websockets": "^5.3.11",
     "bcryptjs": "^2.4.3",
     "email-templates": "^5.0.1",
+    "googleapis": "^34.0.0",
     "handlebars": "^4.0.12",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.3",

@@ -27,6 +27,7 @@ export class UserService extends SharedService<User> {
   async register(vm: RegisterModel): Promise<boolean> {
     const { email, isHelper, password } = vm;
     let user;
+    let salt;
 
     try {
       user = await this.findOne({ email });
@@ -35,18 +36,25 @@ export class UserService extends SharedService<User> {
     }
 
     if (user) {
-      throw new BadRequestException('Already existed');
+      if (user.isVerified) {
+        throw new BadRequestException('Already existed');
+      } else {
+        salt = await genSalt(10);
+        user.password = await hash(password, salt);
+        await this.update(user.id, user);
+        await this.sendVerificationEmail(user);
+        return true;
+      }
     }
 
     const newUser = new this._model();
     newUser.email = email;
     newUser.isHelper = isHelper;
-    const salt = await genSalt(10);
+    salt = await genSalt(10);
     newUser.password = await hash(password, salt);
-    
+
     await this.create(newUser);
     await this.sendVerificationEmail(newUser);
-
     return true;
   }
 

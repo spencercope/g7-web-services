@@ -31,19 +31,19 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleConnection(client: Socket) {
     const { token } = client.handshake.query;
 
-    if (!token) {
-      client.disconnect(true);
-      return;
-    }
+    // if (!token) {
+    //   client.disconnect(true);
+    //   return;
+    // }
+    //
+    // const decoded = await this.getDecodedToken(client, token);
+    // const user = await this.getUser(client, decoded.email);
+    //
+    // if (this.clients[user.id]) {
+    //   client.disconnect(true);
+    // }
 
-    const decoded = await this.getDecodedToken(client, token);
-    const user = await this.getUser(client, decoded.email);
-
-    if (this.clients[user.id]) {
-      client.disconnect(true);
-    }
-
-    this.clients[user.id] = client.id;
+    this.clients[client.id] = client.id;
     this.emitConnectedClients();
   }
 
@@ -54,22 +54,24 @@ export class SocketGateway implements OnGatewayConnection, OnGatewayDisconnect {
    */
   @SubscribeMessage('send-location')
   async onLocationReceived(client: Socket, data: any) {
-    const { location, authToken } = data;
-    let decoded;
-    try {
-      decoded = await this._authService.verifyToken(authToken);
-    } catch (e) {
-      this.emitExceptionEvent(client, 'Invalid token');
-    }
+    const { lat, lng, authToken } = data;
+    // let decoded;
+    // try {
+    //   decoded = await this._authService.verifyToken(authToken);
+    // } catch (e) {
+    //   this.emitExceptionEvent(client, 'Invalid token');
+    // }
+    //
+    // let user;
+    // try {
+    //   user = await this._userService.findOne({ email: decoded.email });
+    // } catch (e) {
+    //   this.emitExceptionEvent(client, 'Invalid');
+    // }
 
-    let user;
-    try {
-      user = await this._userService.findOne({ email: decoded.email });
-    } catch (e) {
-      this.emitExceptionEvent(client, 'Invalid');
-    }
+    this.clientsLocations[client.id] = this.clientsLocations[client.id] || { lat, lng};
 
-    this.clientsLocations[user.id] = this.clientsLocations[user.id] || location;
+    console.log('clientLocation', this.clientsLocations);
   }
 
   handleDisconnect(client: Client) {
