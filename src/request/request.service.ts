@@ -33,6 +33,10 @@ export class RequestService extends SharedService<HelpRequest> {
     try {
       sender = await this._userService.findById(vm.senderId);
       receiver = await this._userService.findById(vm.receiverId);
+      console.log(receiver);
+      console.log(sender);
+      console.log(vm.receiverId);
+      console.log(vm.senderId);
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
