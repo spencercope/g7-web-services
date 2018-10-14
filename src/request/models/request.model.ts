@@ -12,6 +12,10 @@ export class HelpRequest extends SharedModel<HelpRequest>{
     isApproved: boolean;
     @prop({ default: false, required: true })
     isComplete: boolean;
+    @prop({ required: true })
+    senderId: string;
+    @prop({ required: true })
+    receiverId: string;
 
 
   static get model(): ModelType<HelpRequest> {

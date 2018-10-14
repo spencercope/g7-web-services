@@ -66,5 +66,5 @@ export class UserController {
 
     const result = await this._userService.updateProfile(currentUser.id, vm);
     return result.toJSON();
-  }
+  } 
 }

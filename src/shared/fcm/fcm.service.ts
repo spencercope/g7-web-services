@@ -13,19 +13,21 @@ export class FcmService {
     this._fcmServerKey =
       'AAAAuiVZnpw:APA91bGv_FfA6bqbBu-OASjeCvsSe4FaOIRcaT0eB1AkIbKVil9SPkw_5c612RCJHpjT-' +
       'iWcDmzwneAPUJK1qZelobXCukjNymswXmnp5R2X9p21NYMAVHMqazzGUmhWgLHkhXAzqKb2';
-    this._fcmSendUrl = 'https://fcm.googleapis.com/fcm/send';
+    this._fcmSendUrl = 'https://fcm.googleapis.com/v1/projects/gh7-server/messages:send';
     this._config = {
       headers: {
         'Content-type': 'application/json',
-        'Authorization': `key=${this._fcmServerKey}`,
+        'Authorization': `Bearer ${this._fcmServerKey}`,
       },
     };
   }
 
   async sendNotificationToToken(fcmToken: string, notificationOptions: NotificationOptions): Promise<any> {
     const data = {
-      to: fcmToken,
-      notification: notificationOptions,
+      message:{
+        token: fcmToken,
+        notification: notificationOptions,
+      },
     };
 
     return this._http.post(this._fcmSendUrl, data, this._config).toPromise();

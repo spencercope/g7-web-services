@@ -17,6 +17,7 @@ import { RequestModule } from './request/request.module';
       retryAttempts: 3,
       retryDelay: 3000,
       useNewUrlParser: true,
+      useFindAndModify: false
     }),
     RequestModule,
   ],

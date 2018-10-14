@@ -29,7 +29,7 @@ export abstract class SharedService<T extends Typegoose> {
   }
 
   async update(id: string, item: InstanceType<T>): Promise<InstanceType<T>> {
-    return this._model.findByIdAndUpdate(this.toObjectId(id), item, { new: true }).exec();
+    return this._model.findOneAndUpdate({_id: this.toObjectId(id)}, item, { new: true }).exec();
   }
 
   async clearCollection(filter = {}): Promise<void> {
