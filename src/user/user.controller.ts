@@ -40,6 +40,7 @@ export class UserController {
 
   @Post('login')
   async login(@Body() vm: LoginModel): Promise<any> {
+    console.log(vm);
     return this._userService.login(vm);
   }
 
