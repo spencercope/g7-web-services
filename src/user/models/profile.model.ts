@@ -7,4 +7,5 @@ export class ProfileModel {
   firstName: string;
   lastName: string;
   phone: string;
+  helpCategories: string[];
 }

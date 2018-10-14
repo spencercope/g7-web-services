@@ -74,11 +74,11 @@ export class RequestService extends SharedService<HelpRequest> {
     const { isApproved, isComplete, isRejected } = vm;
 
     try {
-      _request = await this._userService.findById(requestId);
+      _request = await this._model.findById(requestId);
     } catch (e) {
       throw new InternalServerErrorException(e);
     }
-
+console.log("ISAPPROVED", isApproved)
     _request.isApproved = isApproved;
     _request.isComplete = isComplete;
     _request.isRejected = isRejected;

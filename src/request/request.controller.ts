@@ -2,6 +2,7 @@ import { Controller, Post, Req, Body, UnauthorizedException, UseGuards, Get } fr
 import { HelpRequest } from './models/request.model';
 import { RequestService } from './request.service';
 import { AuthGuard } from '@nestjs/passport';
+import { Query } from 'mongoose';
 
 @Controller('requests')
 export class RequestController {
@@ -18,16 +19,18 @@ export class RequestController {
   @Post('update-request')
   @UseGuards(AuthGuard())
   async updateRequest(@Req() req, vm: HelpRequest): Promise<any> {
-    const requestId = req.request.id;
-    return this._requestService.updateRequest(requestId, vm);
+    const requestId = req.body.requestId;
+    console.log(req.body);
+    return this._requestService.updateRequest(requestId, req.body);
   }
 
   @Get('receiver')
   @UseGuards(AuthGuard())
   async getRequestByReciver(@Req() req) {
-    const requestId = req.body.receiverId;
+    const requestId = req.user.id;
+    console.log(req.user)
     return this._requestService.getRequestByReceiver(requestId);
-  }
+  } 
 
   @Get()
   @UseGuards(AuthGuard())

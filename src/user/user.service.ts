@@ -153,12 +153,13 @@ export class UserService extends SharedService<User> {
       throw new InternalServerErrorException(e);
     }
 
-    const { firstName, lastName, nickname, organization, phone } = vm;
+    const { firstName, lastName, nickname, organization, phone, helpCategories} = vm;
     user.firstName = firstName;
     user.lastName = lastName;
     user.nickname = nickname;
     user.organization = organization;
     user.phone = phone;
+    user.helpCategories = helpCategories;
 
 
     try {
