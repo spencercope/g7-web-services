@@ -57,7 +57,7 @@ export class RequestService extends SharedService<HelpRequest> {
       const message = {
         title: 'Someone is asking for your assistance',
         subtitle: sender.firstName + ' ' + sender.lastName,
-        body: sender.firstName + 'Needs your help with the following: ',
+        body: sender.firstName + ' is requesting your help with the following: ',
       };
       this._fcmService.sendNotificationToToken(receiver.fcmToken, message);
     }
